@@ -25,21 +25,29 @@
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+/* Reset and Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
     font-family: var(--font);
 }
 
 body {
     background-color: var(--bg-base);
     color: var(--text-main);
-    overflow: hidden;
+    overflow-y: hidden;
     height: 100vh;
 }
 
-/* Background elements */
+/* Background Elements */
 .bg-shape {
     position: absolute;
     filter: blur(140px);
@@ -73,14 +81,16 @@ body {
     opacity: 0.2;
 }
 
-/* Base Layout */
+/* App Layout */
 .app-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
 }
 
-/* Top Navigation */
+/* Header/Navigation */
 .header {
     height: 80px;
     padding: 0 40px;
@@ -116,9 +126,6 @@ body {
     position: relative;
     width: 100%;
     max-width: 500px;
-}
-
-.header .search-bar {
     margin: 0 40px;
 }
 
@@ -177,7 +184,7 @@ input[type="text"]:focus {
     border: 1px solid var(--border-color);
 }
 
-/* Spinner */
+/* Utilities */
 .spinner {
     position: absolute;
     right: 16px;
@@ -205,12 +212,16 @@ input[type="text"]:focus {
     display: none !important;
 }
 
-/* Main Content Area */
+.desktop-only {
+    display: block !important;
+}
+
+/* Main Content */
 .main-content {
     flex: 1;
     position: relative;
     overflow: hidden;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     transition: margin-bottom 0.4s;
 }
 
@@ -222,7 +233,9 @@ input[type="text"]:focus {
     position: absolute;
     inset: 0;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 40px;
+    width: 100%;
 }
 
 .content-scroll::-webkit-scrollbar {
@@ -238,7 +251,7 @@ input[type="text"]:focus {
     border-radius: var(--radius-pill);
 }
 
-/* Section Header */
+/* Section Headers */
 .section-header {
     display: flex;
     align-items: center;
@@ -296,17 +309,20 @@ input[type="text"]:focus {
     cursor: not-allowed;
 }
 
-/* List Layout */
+/* Song List */
 .song-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .empty-state {
     color: var(--text-muted);
     font-size: 15px;
     padding: 20px 0;
+    text-align: left;
 }
 
 .song-row {
@@ -318,6 +334,8 @@ input[type="text"]:focus {
     border-radius: var(--radius-md);
     transition: var(--transition);
     cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .song-row:hover {
@@ -424,7 +442,7 @@ input[type="text"]:focus {
     margin-left: 20px;
 }
 
-/* Now Playing & Queue Layout */
+/* Now Playing Layout */
 .np-layout {
     display: flex;
     gap: 60px;
@@ -457,6 +475,8 @@ input[type="text"]:focus {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 8px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
 }
 
 #np-large-artist {
@@ -471,7 +491,7 @@ input[type="text"]:focus {
     line-height: 1.5;
 }
 
-/* Lyrics */
+/* Lyrics Container */
 .lyrics-container {
     padding: 0;
     min-height: auto;
@@ -483,11 +503,6 @@ input[type="text"]:focus {
 
 .lyrics-container p {
     margin-bottom: 1em;
-}
-
-.lyrics-container .empty-state {
-    text-align: left;
-    padding: 0;
 }
 
 /* Player Bar */
@@ -709,7 +724,33 @@ input[type="text"]:focus {
     transform: scale(1.2);
 }
 
-/* Responsive adjustments */
+/* Tabs System */
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 10px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tab-btn.active {
+    color: var(--text-main);
+    border-bottom: 2px solid var(--accent-red);
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+/* Mobile Styles */
 @media (max-width: 900px) {
     .np-layout {
         flex-direction: column;
@@ -717,6 +758,13 @@ input[type="text"]:focus {
 
     .np-left {
         position: relative;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .np-right {
+        min-width: 0;
+        width: 100%;
     }
 
     .large-cover {
@@ -746,7 +794,7 @@ input[type="text"]:focus {
         padding: 0 20px;
     }
 
-    .header .search-bar {
+    .search-bar {
         margin: 0 20px;
     }
 
@@ -758,7 +806,27 @@ input[type="text"]:focus {
         display: none;
     }
 
-    /* Mobile Mini-Player Layout (Floating Pill) */
+    .mobile-np-header {
+        position: relative;
+        text-align: center;
+        margin-bottom: 20px;
+        padding: 0 40px;
+    }
+
+    #btn-like-m {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .mobile-tabs {
+        display: flex;
+        justify-content: center;
+        gap: 60px;
+        /* Increased gap for better spacing between queue and lyrics buttons on mobile */
+    }
+
+    /* Mobile Mini-Player */
     .player-bar {
         height: 64px;
         min-height: 64px;
@@ -779,6 +847,22 @@ input[type="text"]:focus {
         flex: 1;
         max-width: none;
         overflow: hidden;
+        gap: 12px;
+    }
+
+    .np-cover {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+    }
+
+    .np-details h4 {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
+    .np-details p {
+        font-size: 11px;
     }
 
     .np-details {
@@ -803,37 +887,42 @@ input[type="text"]:focus {
     }
 
     #btn-shuffle,
-    #btn-repeat,
-    #btn-prev {
+    #btn-repeat {
         display: none !important;
     }
 
+    #btn-prev {
+        display: block !important;
+    }
+
     .control-buttons {
-        gap: 12px;
-        margin-bottom: 0px;
+        gap: 8px;
+        margin-bottom: 0;
         justify-content: flex-end;
         width: auto;
     }
 
     .play-pause-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        margin: 0 4px;
     }
 
     .ctrl-btn {
-        font-size: 20px;
+        font-size: 18px;
+        padding: 4px;
     }
 
-    /* Full Player styling for Queue section on Mobile */
     #queue-section.full-player-mobile {
         position: fixed;
         inset: 0;
         z-index: 2000;
         background: var(--bg-base);
         padding-top: 60px;
-        /* Space for close btn */
         margin-top: 0;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     #queue-section .content-scroll {
@@ -841,45 +930,48 @@ input[type="text"]:focus {
     }
 
     .main-content.player-active {
-        margin-bottom: 0px;
+        margin-bottom: 0;
     }
 
     .main-content.player-active .content-scroll {
         padding-bottom: 90px;
     }
 
-    /* Tabs */
-    .tab-pane {
-        display: none;
+    .content-scroll {
+        padding: 20px;
     }
 
-    .tab-pane.active {
-        display: block;
+    #np-like {
+        display: none !important;
     }
-}
 
-/* Tabs UI */
-.tab-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-muted);
-    font-size: 18px;
-    font-weight: 600;
-    padding-bottom: 10px;
-    border-bottom: 2px solid transparent;
-    cursor: pointer;
-    transition: var(--transition);
-}
+    /* Default Queue Tab on Mobile (assumes JS sets .active on #queue-pane; CSS ensures visibility if needed) */
+    #lyrics-pane {
+        display: none !important;
+        /* Hide lyrics by default on mobile */
+    }
 
-.tab-btn.active {
-    color: var(--text-main);
-    border-bottom: 2px solid var(--accent-red);
-}
-
-@media (min-width: 769px) {
-
-    #lyrics-pane,
     #queue-pane {
         display: block !important;
+        /* Show queue as default on mobile */
+    }
+
+    /* Override for desktop where both are shown */
+    @media (min-width: 769px) {
+
+        #lyrics-pane,
+        #queue-pane {
+            display: block !important;
+        }
+
+        #queue-pane {
+            display: block;
+            /* Reset to tab system on desktop */
+        }
+
+        #lyrics-pane {
+            display: none;
+            /* Reset to tab system on desktop */
+        }
     }
 }

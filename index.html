@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>AetherMusic - Minimal Audio Streaming</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,13 +87,10 @@
                     <!-- Left: Now Playing Detailed Info + Lyrics -->
                     <div class="np-left">
                         <img id="np-large-cover" src="https://via.placeholder.com/300" alt="Cover" class="large-cover">
-                        <div
-                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-                            <div style="max-width: 85%;">
-                                <h2 id="np-large-title">No song playing</h2>
-                                <p id="np-large-artist" class="text-muted"
-                                    style="font-size: 18px; color: var(--text-link);">-</p>
-                            </div>
+                        <div class="mobile-np-header">
+                            <h2 id="np-large-title">No song playing</h2>
+                            <p id="np-large-artist" class="text-muted"
+                                style="font-size: 18px; color: var(--text-link);">-</p>
                             <button class="icon-btn mobile-only" id="btn-like-m"><i class="ph ph-heart"
                                     id="like-icon-m"></i></button>
                         </div>
